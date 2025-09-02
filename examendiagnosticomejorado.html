@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Examen Diagnóstico - Procesos de Manufactura</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #e74c3c;
+            --accent-color: #3498db;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            margin-bottom: 10px;
+        }
+        
+        .instructions {
+            background-color: var(--light-color);
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 5px solid var(--accent-color);
+        }
+        
+        .student-info {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 5px;
+        }
+        
+        input:invalid, select:invalid {
+            border-color: #e74c3c;
+        }
+        
+        input:valid, select:valid {
+            border-color: #2ecc71;
+        }
+        
+        .error-message {
+            color: #e74c3c;
+            font-size: 0.85em;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .exam-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .section-title {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .question {
+            margin-bottom: 25px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 5px;
+        }
+        
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .options {
+            margin-left: 20px;
+        }
+        
+        .options label {
+            display: block;
+            padding: 8px;
+            margin-bottom: 5px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .options label:hover {
+            background: #e0e0e0;
+        }
+        
+        .true-false {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .true-false label {
+            display: inline-flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px 20px;
+            background: #f0f0f0;
+            border-radius: 4px;
+        }
+        
+        .true-false input {
+            width: auto;
+            margin-right: 5px;
+        }
+        
+        .matching {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .matching-column {
+            flex: 1;
+            min-width: 200px;
+            margin: 10px;
+        }
+        
+        .matching-item {
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background: #f9f9f9;
+        }
+        
+        .matching-select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        
+        .expectation-scale {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        
+        .scale-item {
+            text-align: center;
+            flex: 1;
+        }
+        
+        .scale-item label {
+            display: block;
+            margin-bottom: 5px;
+            padding: 10px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        #submit-btn {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        #submit-btn:hover {
+            background-color: #1a252f;
+        }
+        
+        #reset-btn {
+            background-color: #95a5a6;
+            color: white;
+        }
+        
+        #reset-btn:hover {
+            background-color: #7f8c8d;
+        }
+        
+        .results {
+            display: none;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+        
+        .results h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .score {
+            font-size: 24px;
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: var(--light-color);
+            border-radius: 5px;
+        }
+        
+        .answers-review {
+            margin-top: 20px;
+        }
+        
+        .answer-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .correct {
+            color: #27ae60;
+        }
+        
+        .incorrect {
+            color: #e74c3c;
+        }
+        
+        .success-message {
+            padding: 10px;
+            background: #d4edda;
+            color: #155724;
+            border-radius: 4px;
+            margin: 10px 0;
+            text-align: center;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--accent-color);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .validation-error {
+            color: #e74c3c;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            background: #fadbd8;
+            border-radius: 4px;
+            margin: 10px 0;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Examen Diagnóstico</h1>
+            <p>Procesos de Manufactura - Licenciatura en Ingeniería Mecánica Automotriz</p>
+        </header>
+        
+        <div class="instructions">
+            <h2>Instrucciones</h2>
+            <p>Este examen diagnóstico tiene como objetivo conocer tus conocimientos previos, conceptos básicos de la materia y expectativas sobre el curso de Procesos de Manufactura.</p>
+            <p>No te preocupes si no conoces todas las respuestas, este examen es solo para identificar el punto de partida de tu aprendizaje.</p>
+            <p>Por favor, contesta con honestidad todas las secciones.</p>
+        </div>
+        
+        <div class="student-info">
+            <h2>Datos del Estudiante</h2>
+            <div class="form-group">
+                <label for="name">Nombre completo:</label>
+                <input type="text" id="name" required>
+                <div class="error-message" id="name-error">Por favor ingresa tu nombre completo</div>
+            </div>
+            <div class="form-group">
+                <label for="student-id">Número de lista:</label>
+                <input type="text" id="student-id" required>
+                <div class="error-message" id="id-error">Por favor ingresa tu número de lista</div>
+            </div>
+            <div class="form-group">
+                <label for="group">Grupo:</label>
+                <input type="text" id="group" required>
+                <div class="error-message" id="group-error">Por favor ingresa tu grupo</div>
+            </div>
+        </div>
+        
+        <div class="validation-error" id="form-error">
+            Por favor completa todos los campos requeridos antes de enviar el examen.
+        </div>
+        
+        <form id="exam-form">
+            <!-- Sección 1: Conocimientos Previos -->
+            <div class="exam-section">
+                <h2 class="section-title">Sección 1: Conocimientos Previos</h2>
+                
+                <div class="question">
+                    <p class="question-text">1. ¿Has tenido experiencia previa con procesos de manufactura?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q1" value="a"> Sí, en un entorno industrial</label>
+                        <label><input type="radio" name="q1" value="b"> Sí, en talleres escolares</label>
+                        <label><input type="radio" name="q1" value="c"> Solo a nivel teórico</label>
+                        <label><input type="radio" name="q1" value="d"> No, es mi primer acercamiento</label>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <p class="question-text">2. Relaciona los procesos de manufactura con sus características principales:</p>
+                    <div class="matching">
+                        <div class="matching-column">
+                            <div class="matching-item">A. Torneado</div>
+                            <div class="matching-item">B. Fresado</div>
+                            <div class="matching-item">C. Soldadura</div>
+                            <div class="matching-item">D. Fundición</div>
+                        </div>
+                        <div class="matching-column">
+                            <select class="matching-select" name="q2a">
+                                <option value="">Selecciona una opción</option>
+                                <option value="3">Proceso de unión de materiales</option>
+                                <option value="1">Arranque de viruta con herramienta rotativa</option>
+                                <option value="4">Conformado por vertido de material fundido</option>
+                                <option value="2">Arranque de viruta con pieza en movimiento rotatorio</option>
+                            </select>
+                            <select class="matching-select" name="q2b">
+                                <option value="">Selecciona una opción</option>
+                                <option value="3">Proceso de unión de materiales</option>
+                                <option value="1">Arranque de viruta con herramienta rotativa</option>
+                                <option value="4">Conformado por vertido de material fundido</option>
+                                <option value="2">Arranque de viruta con pieza en movimiento rotatorio</option>
+                            </select>
+                            <select class="matching-select" name="q2c">
+                                <option value="">Selecciona una opción</option>
+                                <option value="3">Proceso de unión de materiales</option>
+                                <option value="1">Arranque de viruta con herramienta rotativa</option>
+                                <option value="4">Conformado por vertido de material fundido</option>
+                                <option value="2">Arranque de viruta con pieza en movimiento rotatorio</option>
+                            </select>
+                            <select class="matching-select" name="q2d">
+                                <option value="">Selecciona una opción</option>
+                                <option value="3">Proceso de unión de materiales</option>
+                                <option value="1">Arranque de viruta con herramienta rotativa</option>
+                                <option value="4">Conformado por vertido de material fundido</option>
+                                <option value="2">Arranque de viruta con pieza en movimiento rotatorio</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <p class="question-text">3. ¿Qué software de diseño/manufactura conoces?</p>
+                    <div class="options">
+                        <label><input type="checkbox" name="q3" value="solidworks"> SolidWorks</label>
+                        <label><input type="checkbox" name="q3" value="autocad"> AutoCAD</label>
+                        <label><input type="checkbox" name="q3" value="inventor"> Inventor</label>
+                        <label><input type="checkbox" name="q3" value="mastercam"> Mastercam</label>
+                        <label><input type="checkbox" name="q3" value="ninguno"> Ninguno</label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sección 2: Conceptos Básicos -->
+            <div class="exam-section">
+                <h2 class="section-title">Sección 2: Conceptos Básicos</h2>
+                
+                <div class="question">
+                    <p class="question-text">4. El arranque de viruta se refiere a procesos donde se remueve material para dar forma a una pieza.</p>
+                    <div class="true-false">
+                        <label><input type="radio" name="q4" value="true"> Verdadero</label>
+                        <label><input type="radio" name="q4" value="false"> Falso</label>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <p class="question-text">5. La soldadura MIG y TIG son procesos de unión permanente.</p>
+                    <div class="true-false">
+                        <label><input type="radio" name="q5" value="true"> Verdadero</label>
+                        <label><input type="radio" name="q5" value="false"> Falso</label>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <p class="question-text">6. Selecciona los procesos que pertenecen a la deformación plástica:</p>
+                    <div class="options">
+                        <label><input type="checkbox" name="q6" value="laminado"> Laminado</label>
+                        <label><input type="checkbox" name="q6" value="torneado"> Torneado</label>
+                        <label><input type="checkbox" name="q6" value="forjado"> Forjado</label>
+                        <label><input type="checkbox" name="q6" value="fresado"> Fresado</label>
+                        <label><input type="checkbox" name="q6" value="extrusion"> Extrusión</label>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <p class="question-text">7. ¿Qué es una hoja de ruta de proceso en manufactura?</p>
+                    <div class="options">
+                        <label><input type="radio" name="q7" value="a"> Un documento que describe los pasos para fabricar una pieza</label>
+                        <label><input type="radio" name="q7" value="b"> Un plano de la pieza a manufacturar</label>
+                        <label><input type="radio" name="q7" value="c"> Una lista de materiales necesarios</label>
+                        <label><input type="radio" name="q7" value="d"> Un diagrama de la máquina herramienta</label>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sección 3: Expectativas -->
+            <div class="exam-section">
+                <h2 class="section-title">Sección 3: Expectativas</h2>
+                
+                <div class="question">
+                    <p class="question-text">8. ¿Qué áreas de los procesos de manufactura te interesan más?</p>
+                    <div class="options">
+                        <label><input type="checkbox" name="q8" value="maquinado"> Maquinado convencional y CNC</label>
+                        <label><input type="checkbox" name="q8" value="union"> Procesos de unión (soldadura, etc.)</label>
+                        <label><input type="checkbox" name="q8" value="fundicion"> Fundición y moldeo</label>
+                        <label><input type="checkbox" name="q8" value="deformacion"> Deformación plástica</label>
+                        <label><input type="checkbox" name="q8" value="automatizacion"> Automatización y Industria 4.0</label>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <p class="question-text">9. Califica tu nivel de interés en los siguientes aspectos (1 = poco interés, 5 = mucho interés):</p>
+                    
+                    <div class="question">
+                        <p>a) Aprender a operar máquinas herramienta:</p>
+                        <div class="expectation-scale">
+                            <div class="scale-item"><label>1 <input type="radio" name="q9a" value="1"></label></div>
+                            <div class="scale-item"><label>2 <input type="radio" name="q9a" value="2"></label></div>
+                            <div class="scale-item"><label>3 <input type="radio" name="q9a" value="3"></label></div>
+                            <div class="scale-item"><label>4 <input type="radio" name="q9a" value="4"></label></div>
+                            <div class="scale-item"><label>5 <input type="radio" name="q9a" value="5"></label></div>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p>b) Diseñar procesos de manufactura:</p>
+                        <div class="expectation-scale">
+                            <div class="scale-item"><label>1 <input type="radio" name="q9b" value="1"></label></div>
+                            <div class="scale-item"><label>2 <input type="radio" name="q9b" value="2"></label></div>
+                            <div class="scale-item"><label>3 <input type="radio" name="q9b" value="3"></label></div>
+                            <div class="scale-item"><label>4 <input type="radio" name="q9b" value="4"></label></div>
+                            <div class="scale-item"><label>5 <input type="radio" name="q9b" value="5"></label></div>
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <p>c) Conocer sobre nuevos materiales y tecnologías:</p>
+                        <div class="expectation-scale">
+                            <div class="scale-item"><label>1 <input type="radio" name="q9c" value="1"></label></div>
+                            <div class="scale-item"><label>2 <input type="radio" name="q9c" value="2"></label></div>
+                            <div class="scale-item"><label>3 <input type="radio" name="q9c" value="3"></label></div>
+                            <div class="scale-item"><label>4 <input type="radio" name="q9c" value="4"></label></div>
+                            <div class="scale-item"><label>5 <input type="radio" name="q9c" value="5"></label></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <p class="question-text">10. ¿Qué esperas lograr al finalizar este curso?</p>
+                    <textarea name="q10" rows="4" placeholder="Escribe tus expectativas aquí..."></textarea>
+                </div>
+            </div>
+            
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Procesando respuestas...</p>
+            </div>
+            
+            <div class="buttons">
+                <button type="button" id="reset-btn">Reiniciar</button>
+                <button type="submit" id="submit-btn">Enviar Examen</button>
+            </div>
+        </form>
+        
+        <div class="results" id="results">
+            <h2>Resultados del Examen Diagnóstico</h2>
+            
+            <div id="student-data"></div>
+            
+            <div class="score" id="score-container">
+                <p>Puntuación: <span id="score">0</span>/10</p>
+            </div>
+            
+            <div class="answers-review" id="answers-review">
+                <!-- Aquí se mostrarán las respuestas y retroalimentación -->
+            </div>
+            
+            <div style="text-align: center; margin-top: 20px;">
+                <button onclick="window.print()">Imprimir Resultados</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const examForm = document.getElementById('exam-form');
+            const resultsSection = document.getElementById('results');
+            const studentDataContainer = document.getElementById('student-data');
+            const scoreContainer = document.getElementById('score-container');
+            const answersReviewContainer = document.getElementById('answers-review');
+            const resetBtn = document.getElementById('reset-btn');
+            const loadingElement = document.getElementById('loading');
+            const formError = document.getElementById('form-error');
+            
+            // Respuestas correctas
+            const correctAnswers = {
+                q2: { a: "2", b: "1", c: "3", d: "4" },
+                q4: "true",
+                q5: "true",
+                q6: ["laminado", "forjado", "extrusion"],
+                q7: "a"
+            };
+            
+            // Mostrar mensajes de error
+            function showError(element, message) {
+                const errorElement = document.getElementById(element + '-error');
+                if (errorElement) {
+                    errorElement.textContent = message;
+                    errorElement.style.display = 'block';
+                }
+            }
+            
+            // Ocultar mensajes de error
+            function hideError(element) {
+                const errorElement = document.getElementById(element + '-error');
+                if (errorElement) {
+                    errorElement.style.display = 'none';
+                }
+            }
+            
+            // Validar formulario
+            function validateForm() {
+                let isValid = true;
+                formError.style.display = 'none';
+                
+                // Validar campos de información del estudiante
+                const name = document.getElementById('name');
+                const studentId = document.getElementById('student-id');
+                const group = document.getElementById('group');
+                
+                if (!name.value.trim()) {
+                    showError('name', 'Por favor ingresa tu nombre completo');
+                    isValid = false;
+                } else {
+                    hideError('name');
+                }
+                
+                if (!studentId.value.trim()) {
+                    showError('id', 'Por favor ingresa tu número de lista');
+                    isValid = false;
+                } else {
+                    hideError('id');
+                }
+                
+                if (!group.value.trim()) {
+                    showError('group', 'Por favor ingresa tu grupo');
+                    isValid = false;
+                } else {
+                    hideError('group');
+                }
+                
+                if (!isValid) {
+                    formError.style.display = 'block';
+                    formError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                
+                return isValid;
+            }
+            
+            // Calificar el examen
+            function gradeExam(formData) {
+                let score = 0;
+                const reviewItems = [];
+                
+                // Pregunta 1 (sin puntuación, solo informativa)
+                reviewItems.push(`
+                    <div class="answer-item">
+                        <p><strong>1. Experiencia previa:</strong> ${formData.get('q1') ? 
+                            (formData.get('q1') === 'a' ? 'Sí, en un entorno industrial' : 
+                             formData.get('q1') === 'b' ? 'Sí, en talleres escolares' : 
+                             formData.get('q1') === 'c' ? 'Solo a nivel teórico' : 
+                             'No, es mi primer acercamiento') : 'Sin respuesta'}</p>
+                    </div>
+                `);
+                
+                // Pregunta 2
+                let q2Score = 0;
+                const q2Answers = {
+                    a: formData.get('q2a'),
+                    b: formData.get('q2b'),
+                    c: formData.get('q2c'),
+                    d: formData.get('q2d')
+                };
+                
+                let q2Feedback = "<p><strong>2. Relacionar procesos:</strong></p><ul>";
+                for (const [key, value] of Object.entries(q2Answers)) {
+                    const isCorrect = value === correctAnswers.q2[key];
+                    if (isCorrect) q2Score++;
+                    
+                    const processName = key === 'a' ? 'Torneado' : 
+                                      key === 'b' ? 'Fresado' : 
+                                      key === 'c' ? 'Soldadura' : 'Fundición';
+                                      
+                    q2Feedback += `<li>${processName}: ${isCorrect ? '<span class="correct">Correcto</span>' : 
+                        `<span class="incorrect">Incorrecto</span> (Respuesta correcta: ${getMatchingOption(correctAnswers.q2[key])})`}</li>`;
+                }
+                q2Feedback += "</ul>";
+                
+                score += q2Score;
+                reviewItems.push(`
+                    <div class="answer-item">
+                        ${q2Feedback}
+                        <p>Puntuación: ${q2Score}/4</p>
+                    </div>
+                `);
+                
+                // Pregunta 3 (sin puntuación, solo informativa)
+                const q3Values = formData.getAll('q3');
+                let q3Text = 'Ninguno';
+                if (q3Values.length > 0) {
+                    q3Text = q3Values.map(val => {
+                        return val === 'solidworks' ? 'SolidWorks' : 
+                               val === 'autocad' ? 'AutoCAD' : 
+                               val === 'inventor' ? 'Inventor' : 
+                               val === 'mastercam' ? 'Mastercam' : 'Ninguno';
+                    }).join(', ');
+                }
+                
+                reviewItems.push(`
+                    <div class="answer-item">
+                        <p><strong>3. Software conocido:</strong> ${q3Text}</p>
+                    </div>
+                `);
+                
+                // Pregunta 4
+                const q4Answer = formData.get('q4');
+                const q4Correct = q4Answer === correctAnswers.q4;
+                if (q4Correct) score++;
+                
+                reviewItems.push(`
+                    <div class="answer-item">
+                        <p><strong>4. Arranque de viruta:</strong> 
+                        ${q4Answer ? (q4Answer === 'true' ? 'Verdadero' : 'Falso') : 'Sin respuesta'} 
+                        ${q4Correct ? '<span class="correct">✓ Correcto</span>' : 
+                          '<span class="incorrect">✗ Incorrecto (La respuesta correcta es: Verdadero)</span>'}</p>
+                    </div>
+                `);
+                
+                // Pregunta 5
+                const q5Answer = formData.get('q5');
+                const q5Correct = q5Answer === correctAnswers.q5;
+                if (q5Correct) score++;
+                
+                reviewItems.push(`
+                    <div class="answer-item">
+                        <p><strong>5. Soldadura MIG y TIG:</strong> 
+                        ${q5Answer ? (q5Answer === 'true' ? 'Verdadero' : 'Falso') : 'Sin respuesta'} 
+                        ${q5Correct ? '<span class="correct">✓ Correcto</span>' : 
+                          '<span class="incorrect">✗ Incorrecto (La respuesta correcta es: Verdadero)</span>'}</p>
+                    </div>
+                `);
+                
+                // Pregunta 6
+                const q6Answers = formData.getAll('q6');
+                const q6CorrectAnswers = correctAnswers.q6;
+                
+                let q6Score = 0;
+                let correctSelected = 0;
+                let incorrectSelected = 0;
+                
+                // Verificar respuestas correctas seleccionadas
+                q6CorrectAnswers.forEach(correct => {
+                    if (q6Answers.includes(correct)) {
+                        correctSelected++;
+                    }
+                });
+                
+                // Verificar respuestas incorrectas seleccionadas
+                q6Answers.forEach(answer => {
+                    if (!q6CorrectAnswers.includes(answer)) {
+                        incorrectSelected++;
+                    }
+                });
+                
+                // Calcular puntuación (máximo 3 puntos)
+                q6Score = Math.max(0, correctSelected - incorrectSelected);
+                score += q6Score;
+                
+                reviewItems.push(`
+                    <div class="answer-item">
+                        <p><strong>6. Procesos de deformación plástica:</strong></p>
+                        <p>Seleccionados: ${q6Answers.length > 0 ? 
+                            q6Answers.map(a => 
+                                a === 'laminado' ? 'Laminado' : 
+                                a === 'forjado' ? 'Forjado' : 
+                                a === 'extrusion' ? 'Extrusión' : 
+                                a === 'torneado' ? 'Torneado' : 'Fresado').join(', ') : 'Ninguno'}</p>
+                        <p>Respuestas correctas: Laminado, Forjado, Extrusión</p>
+                        <p>Puntuación: ${q6Score}/3</p>
+                    </div>
+                `);
+                
+                // Pregunta 7
+                const q7Answer = formData.get('q7');
+                const q7Correct = q7Answer === correctAnswers.q7;
+                if (q7Correct) score++;
+                
+                reviewItems.push(`
+                    <div class="answer-item">
+                        <p><strong>7. Hoja de ruta de proceso:</strong> 
+                        ${q7Answer ? 
+                          (q7Answer === 'a' ? 'Un documento que describe los pasos para fabricar una pieza' : 
+                           q7Answer === 'b' ? 'Un plano de la pieza a manufacturar' : 
+                           q7Answer === 'c' ? 'Una lista de materiales necesarios' : 
+                           'Un diagrama de la máquina herramienta') : 'Sin respuesta'} 
+                        ${q7Correct ? '<span class="correct">✓ Correcto</span>' : 
+                          '<span class="incorrect">✗ Incorrecto (La respuesta correcta es: Un documento que describe los pasos para fabricar una pieza)</span>'}</p>
+                    </div>
+                `);
+                
+                // Pregunta 8 (sin puntuación, solo informativa)
+                const q8Values = formData.getAll('q8');
+                let q8Text = 'Ninguna área específica';
+                if (q8Values.length > 0) {
+                    q8Text = q8Values.map(val => {
+                        return val === 'maquinado' ? 'Maquinado convencional y CNC' : 
+                               val === 'union' ? 'Procesos de unión' : 
+                               val === 'fundicion' ? 'Fundición y moldeo' : 
+                               val === 'deformacion' ? 'Deformación plástica' : 
+                               'Automatización y Industria 4.0';
+                    }).join(', ');
+                }
+                
+                reviewItems.push(`
+                    <div class="answer-item">
+                        <p><strong>8. Áreas de interés:</strong> ${q8Text}</p>
+                    </div>
+                `);
+                
+                // Pregunta 9 (sin puntuación, solo informativa)
+                const q9a = formData.get('q9a');
+                const q9b = formData.get('q9b');
+                const q9c = formData.get('q9c');
+                
+                reviewItems.push(`
+                    <div class="answer-item">
+                        <p><strong>9. Nivel de interés:</strong></p>
+                        <p>a) Operar máquinas herramienta: ${q9a || 'Sin respuesta'}/5</p>
+                        <p>b) Diseñar procesos de manufactura: ${q9b || 'Sin respuesta'}/5</p>
+                        <p>c) Nuevos materiales y tecnologías: ${q9c || 'Sin respuesta'}/5</p>
+                    </div>
+                `);
+                
+                // Pregunta 10 (sin puntuación, solo informativa)
+                const q10Answer = formData.get('q10');
+                
+                reviewItems.push(`
+                    <div class="answer-item">
+                        <p><strong>10. Expectativas del curso:</strong></p>
+                        <p>${q10Answer || 'Sin respuesta'}</p>
+                    </div>
+                `);
+                
+                return { score, reviewItems };
+            }
+            
+            // Función auxiliar para obtener el texto de la opción de matching
+            function getMatchingOption(value) {
+                switch(value) {
+                    case "1": return "Arranque de viruta con herramienta rotativa (Fresado)";
+                    case "2": return "Arranque de viruta con pieza en movimiento rotatorio (Torneado)";
+                    case "3": return "Proceso de unión de materiales (Soldadura)";
+                    case "4": return "Conformado por vertido de material fundido (Fundición)";
+                    default: return "";
+                }
+            }
+            
+            // Manejar envío del formulario
+            examForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validar datos del estudiante
+                if (!validateForm()) {
+                    return;
+                }
+                
+                // Mostrar carga
+                loadingElement.style.display = 'block';
+                
+                // Obtener datos del formulario
+                const formData = new FormData(examForm);
+                
+                // Calificar examen
+                const { score, reviewItems } = gradeExam(formData);
+                
+                // Ocultar carga
+                loadingElement.style.display = 'none';
+                
+                // Mostrar datos del estudiante
+                const name = document.getElementById('name').value;
+                const studentId = document.getElementById('student-id').value;
+                const group = document.getElementById('group').value;
+                
+                studentDataContainer.innerHTML = `
+                    <p><strong>Nombre:</strong> ${name}</p>
+                    <p><strong>Número de lista:</strong> ${studentId}</p>
+                    <p><strong>Grupo:</strong> ${group}</p>
+                    <p><strong>Carrera:</strong> Licenciatura en Ingeniería Mecánica Automotriz</p>
+                `;
+                
+                // Mostrar puntuación
+                document.getElementById('score').textContent = score;
+                
+                // Aplicar estilo según la puntuación
+                if (score >= 7) {
+                    scoreContainer.style.backgroundColor = '#d4edda';
+                    scoreContainer.style.color = '#155724';
+                } else if (score >= 4) {
+                    scoreContainer.style.backgroundColor = '#fff3cd';
+                    scoreContainer.style.color = '#856404';
+                } else {
+                    scoreContainer.style.backgroundColor = '#f8d7da';
+                    scoreContainer.style.color = '#721c24';
+                }
+                
+                // Mostrar revisión de respuestas
+                answersReviewContainer.innerHTML = reviewItems.join('');
+                
+                // Mostrar sección de resultados
+                resultsSection.style.display = 'block';
+                
+                // Desplazarse a los resultados
+                resultsSection.scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            // Manejar botón de reinicio
+            resetBtn.addEventListener('click', function() {
+                if (confirm('¿Estás seguro de que quieres reiniciar el examen? Se perderán todas tus respuestas.')) {
+                    examForm.reset();
+                    resultsSection.style.display = 'none';
+                    formError.style.display = 'none';
+                    
+                    // Ocultar todos los mensajes de error
+                    hideError('name');
+                    hideError('id');
+                    hideError('group');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
